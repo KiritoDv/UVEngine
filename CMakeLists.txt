@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 include_directories("src/include")
 
-add_executable(SpaceRPG src/main.cpp src/engine/render.cpp src/engine/display.cpp src/engine/util/GFXUtil.cpp src/include/util/GFXUtil.h src/engine/camera.cpp src/include/engine/camera.h src/include/data/nwindow.h src/include/data/nmouse.h src/engine/texture/texture.cpp src/include/engine/texture/texture.h)
+add_executable(SpaceRPG src/main.cpp src/engine/render.cpp src/engine/display.cpp src/engine/util/GFXUtil.cpp src/include/util/GFXUtil.h src/engine/camera.cpp src/include/engine/camera.h src/include/data/nwindow.h src/include/data/nmouse.h src/engine/texture/texture.cpp src/include/engine/texture/texture.h src/include/util/umath.h)
 
 find_package(glfw3 CONFIG REQUIRED)
 find_package(GLUT REQUIRED)
