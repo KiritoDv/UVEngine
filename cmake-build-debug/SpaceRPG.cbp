@@ -95,19 +95,25 @@
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/engine/render.cpp">
 			<Option target="SpaceRPG"/>
 		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/engine/texture/texture.cpp">
+			<Option target="SpaceRPG"/>
+		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/engine/util/GFXUtil.cpp">
-			<Option target="SpaceRPG"/>
-		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/GFXUtil.h">
-			<Option target="SpaceRPG"/>
-		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/camera.h">
 			<Option target="SpaceRPG"/>
 		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/nmouse.h">
 			<Option target="SpaceRPG"/>
 		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/nwindow.h">
+			<Option target="SpaceRPG"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/engine/camera.h">
+			<Option target="SpaceRPG"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/engine/texture/texture.h">
+			<Option target="SpaceRPG"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/util/GFXUtil.h">
 			<Option target="SpaceRPG"/>
 		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/main.cpp">

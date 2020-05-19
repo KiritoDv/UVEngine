@@ -1,5 +1,5 @@
-#include "display.h"
-#include "render.h"
+#include "engine/display.h"
+#include "engine/render.h"
 #include <iostream>
 
 Display::Display(int width, int height, char *windowTitle) {
@@ -56,13 +56,14 @@ Display * Display::createDisplay(int width, int height, char* title){
         oldTime = newTime;
         newTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
 
-        glClearColor(0.7, 0.3, 0.3, 1);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glEnable(GL_TEXTURE_2D);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
         double xMPos, yMPos;
         glfwGetCursorPos(tmp->window.window, &xMPos, &yMPos);
+
+        glClearColor(0.7, 0.3, 0.3, 1);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glEnable(GL_TEXTURE_2D);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         tmp->camera->updateCamera();
         tmp->window.mouseInput.x = xMPos + tmp->camera->pos.x;
@@ -72,7 +73,7 @@ Display * Display::createDisplay(int width, int height, char* title){
         deltaTime = newTime - oldTime;
 
         glDisable(GL_TEXTURE_2D);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_BLEND);
 
         glfwSwapBuffers(tmp->window.window);
         glfwPollEvents();

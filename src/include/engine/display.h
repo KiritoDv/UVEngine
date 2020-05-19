@@ -1,10 +1,10 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-#include <gl/glew.h>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <gl/freeglut.h>
-#include "camera.h"
+#include <GL/freeglut.h>
+#include "engine/camera.h"
 #include <data/nwindow.h>
 
 class Display {

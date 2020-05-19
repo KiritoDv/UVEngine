@@ -1,11 +1,11 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-#include "display.h"
+#include "engine/display.h"
 
 class Render {
     public:
-        Render(){}
+        Render();
         void create();
         void draw(Display* display, float deltaTime);
 };

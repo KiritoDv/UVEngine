@@ -1,5 +1,5 @@
-#include <display.h>
-#include "camera.h"
+#include <engine/display.h>
+#include "engine/camera.h"
 
 void Camera::setupCamera(GLFWwindow* win) {
     Display *display = static_cast<Display*>(glfwGetWindowUserPointer(win));
