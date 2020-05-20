@@ -101,7 +101,16 @@
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/engine/util/GFXUtil.cpp">
 			<Option target="SpaceRPG"/>
 		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/ncolor.h">
+			<Option target="SpaceRPG"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/ninput.h">
+			<Option target="SpaceRPG"/>
+		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/nmouse.h">
+			<Option target="SpaceRPG"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/nscroll.h">
 			<Option target="SpaceRPG"/>
 		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/nwindow.h">

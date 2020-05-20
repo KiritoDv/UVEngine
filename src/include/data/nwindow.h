@@ -9,7 +9,6 @@ struct NWindow {
     float width;
     float height;
     char* title;
-    Mouse mouseInput;
 };
 
 #endif

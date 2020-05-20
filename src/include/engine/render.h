@@ -5,7 +5,7 @@
 
 class Render {
     public:
-        Render();
+        Render(){}
         void create();
         void draw(Display* display, float deltaTime);
 };

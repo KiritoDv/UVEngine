@@ -2,8 +2,8 @@
 #define DATA_NMOUSE
 
 struct Mouse {
-    float x;
-    float y;
+    float x, y = 0;
+    bool inWindow;
 };
 
 #endif

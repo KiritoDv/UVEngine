@@ -42,22 +42,32 @@ Display * Display::createDisplay(int width, int height, char* title){
 
     glfwSwapInterval(0);
 
-    float newTime = 0;
+    float time = 0;
     float oldTime = 0;
     float deltaTime = 0;
-
-    tmp->updateWindowSize(width, height);
-    glfwSetFramebufferSizeCallback(tmp->window.window, WindowResizeCallback);
+    int frameCounter = 0;
+    bool alreadyLoadedStuff = false;
 
     render.create();
 
+    tmp->updateWindowSize(width, height);
+    glfwSetFramebufferSizeCallback(tmp->window.window, WindowResizeCallback);
+    glfwSetCursorEnterCallback(tmp->window.window, MouseEnterCallback);
+    glfwSetScrollCallback(tmp->window.window, ScrollCallback);
+
     while(!glfwWindowShouldClose(tmp->window.window)){
 
-        oldTime = newTime;
-        newTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+        time = glutGet(GLUT_ELAPSED_TIME);
 
         double xMPos, yMPos;
         glfwGetCursorPos(tmp->window.window, &xMPos, &yMPos);
+
+        tmp->camera->updateCamera();
+        tmp->input.mouse.x = xMPos + tmp->camera->pos.x;
+        tmp->input.mouse.y = yMPos + tmp->camera->pos.y;
+
+        deltaTime = ( time - oldTime ) / 1000.0f;
+        oldTime = time;
 
         glClearColor(0.7, 0.3, 0.3, 1);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -65,12 +75,11 @@ Display * Display::createDisplay(int width, int height, char* title){
         glEnable(GL_TEXTURE_2D);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        tmp->camera->updateCamera();
-        tmp->window.mouseInput.x = xMPos + tmp->camera->pos.x;
-        tmp->window.mouseInput.y = yMPos + tmp->camera->pos.y;
-
-        render.draw(tmp, deltaTime);
-        deltaTime = newTime - oldTime;
+        if(frameCounter >= 2){
+            render.draw(tmp, deltaTime);
+        }else{
+            frameCounter++;
+        }
 
         glDisable(GL_TEXTURE_2D);
         glEnable(GL_BLEND);
