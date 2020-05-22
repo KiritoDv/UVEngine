@@ -1,5 +1,5 @@
-#ifndef NINPUT_H
-#define NINPUT_H
+#ifndef DATA_NINPUT
+#define DATA_NINPUT
 
 #include "nmouse.h"
 #include "nscroll.h"

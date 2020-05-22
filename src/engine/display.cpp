@@ -1,6 +1,7 @@
 #include "engine/display.h"
 #include "engine/render.h"
 #include <iostream>
+#include <thread>
 
 Display::Display(int width, int height, char *windowTitle) {
     window.width = width;
@@ -8,105 +9,88 @@ Display::Display(int width, int height, char *windowTitle) {
     window.title = windowTitle;
 }
 
-Display * Display::createDisplay(int width, int height, char* title){
+void Display::createDisplay(int width, int height, char* title){
 
-    Display* tmp = new Display(width, height, title);
-    Render render = Render();
+    auto tmp = new Display(width, height, title);
+    auto render = new Render();
     tmp->camera = new Camera();
 
     if(!glfwInit()){
         std::cout << "Failed to start GLFW" << std::endl;
-        return NULL;
+        return;
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
-    tmp->window.window = glfwCreateWindow(width, height, title, NULL, NULL);
-    glfwSetWindowTitle(tmp->window.window, tmp->window.title);
+    tmp->window.glwindow = glfwCreateWindow(width, height, title, NULL, NULL);
+    glfwSetWindowTitle(tmp->window.glwindow, tmp->window.title);
 
-    if(!tmp->window.window){
+    if(!tmp->window.glwindow){
         std::cout << "Failed to create window" << std::endl;
-        glfwDestroyWindow(tmp->window.window);
-        return NULL;
+        glfwDestroyWindow(tmp->window.glwindow);
+        return;
     }
 
-    glfwSetWindowUserPointer(tmp->window.window, tmp);
-    glfwMakeContextCurrent(tmp->window.window);
+    glfwSetWindowUserPointer(tmp->window.glwindow, tmp);
+    glfwMakeContextCurrent(tmp->window.glwindow);
 
     if (glewInit()){
         std::cout << "Failed to start GLEW" << std::endl;
-        glfwDestroyWindow(tmp->window.window);
-        return NULL;
+        glfwDestroyWindow(tmp->window.glwindow);
+        return;
     }
 
     glfwSwapInterval(0);
 
     float time = 0;
     float oldTime = 0;
-    float deltaTime = 0;
     int frameCounter = 0;
-    bool alreadyLoadedStuff = false;
 
-    render.create();
+    render->game = tmp;
+    render->create();
 
     tmp->updateWindowSize(width, height);
-    glfwSetFramebufferSizeCallback(tmp->window.window, WindowResizeCallback);
-    glfwSetCursorEnterCallback(tmp->window.window, MouseEnterCallback);
-    glfwSetScrollCallback(tmp->window.window, ScrollCallback);
+    glfwSetFramebufferSizeCallback(tmp->window.glwindow, WindowResizeCallback);
+    glfwSetCursorEnterCallback(tmp->window.glwindow, MouseEnterCallback);
+    glfwSetScrollCallback(tmp->window.glwindow, ScrollCallback);
+    tmp->camera->setupCamera(tmp->window.glwindow);
 
-    while(!glfwWindowShouldClose(tmp->window.window)){
+    while(!glfwWindowShouldClose(tmp->window.glwindow)){
+
+        render->update();
+
+        double xMPos, yMPos;
+        glfwGetCursorPos(tmp->window.glwindow, &xMPos, &yMPos);
 
         time = glutGet(GLUT_ELAPSED_TIME);
 
-        double xMPos, yMPos;
-        glfwGetCursorPos(tmp->window.window, &xMPos, &yMPos);
-
-        tmp->camera->updateCamera();
-        tmp->input.mouse.x = xMPos + tmp->camera->pos.x;
-        tmp->input.mouse.y = yMPos + tmp->camera->pos.y;
-
-        deltaTime = ( time - oldTime ) / 1000.0f;
-        oldTime = time;
-
-        glClearColor(0.7, 0.3, 0.3, 1);
+        glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glEnable(GL_TEXTURE_2D);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
         if(frameCounter >= 2){
-            render.draw(tmp, deltaTime);
+            glPushMatrix();
+            render->draw();
+            glPopMatrix();
         }else{
             frameCounter++;
         }
 
-        glDisable(GL_TEXTURE_2D);
-        glEnable(GL_BLEND);
+        tmp->graphics.deltaTime = ( time - oldTime ) / 1000.0f;
+        oldTime = time;
 
-        glfwSwapBuffers(tmp->window.window);
+        glfwSwapBuffers(tmp->window.glwindow);
         glfwPollEvents();
     }
 
-    glfwDestroyWindow(tmp->window.window);
-
-    return tmp;
+    render->dispose();
+    glfwDestroyWindow(tmp->window.glwindow);
+    delete tmp->camera;
+    delete tmp;
 }
 
 void Display::updateWindowSize(int w, int h){
     window.width = w;
     window.height = h;
-    camera->setupCamera(window.window);
+    camera->setupCamera(window.glwindow);
 }
-
-/*
-      * tmp->renderThread = std::thread([keepRunning, tmp, render](){
-             while(keepRunning){
-                 render.updateGame();
-             }
-         });
-      *
-      */
-
-//tmp->renderThread.detach();
-//

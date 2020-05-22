@@ -7,6 +7,7 @@
 #include "engine/camera.h"
 #include <data/nwindow.h>
 #include <data/ninput.h>
+#include <data/ngraphics.h>
 
 class Display {
     private:
@@ -28,7 +29,8 @@ class Display {
         Camera * camera;
         NWindow window;
         NInput input;
-        static Display * createDisplay(int width, int height, char * title);
+        NGraphics graphics;
+        static void createDisplay(int width, int height, char * title);
         void updateWindowSize(int w, int h);
 };
 

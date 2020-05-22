@@ -1,63 +1,68 @@
 #include "engine/texture/texture.h"
 #include "engine/render.h"
-#include "util/GFXUtil.h"
 #include "util/umath.h"
 
-#include <future>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include "glm/glm.hpp"
+#include "util/GFXUtil.h"
 
-Texture * testTexture;
+#include <stdlib.h>
+#include <time.h>
 
-/*
-    unsigned int fbo;
-    glGenFramebuffers(1, &fbo);
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-    //glViewport(0, 0, 800, 600);
-    glViewport(0, 0, 800, 600);
-    glLoadIdentity();
-    glOrtho(0, 800, 600, 0, 0.0, 1.0);
-    glEnable(GL_TEXTURE_2D);
+#include "data/ncolor.h"
 
-    glClearColor(0.7, 0.3, 0.3, 1);
-    glClear(GL_COLOR_BUFFER_BIT);
+Texture * texture;
 
-    GFXUtil::drawRect(0, 0, 20, 20, {255, 100, 255, 255});
- */
+std::vector<int> makeRandomNoise(){
+    std::vector<int> pn(9);
 
-std::vector<std::future<void>> textures;
-
-void Render::create() {
-
-    for(int a = 0; a < 600; a++){
-        textures.push_back(std::async(std::launch::async, []{
-            testTexture = new Texture("F:\\Pics\\79372456_2508036846106949_7921174829296779264_n.png");
-        }));
+    for(int i = 0; i < 4; i++){
+        //std::cout << rand() % 9 << std::endl;
+        pn[rand() % 9] = 1;
     }
-
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    return pn;
 }
 
-float posX = 0;
-float posY = 0;
-bool firstFrameLoaded = false;
+void Render::create() {
+    texture = new Texture("F:\\Pics\\79372456_2508036846106949_7921174829296779264_n.png");
+}
 
-void Render::draw(Display* d, float deltaTime) {
-    //glColor4f(1, 1, 1, 1);
-    //d->camera->pos = glm::vec3(camX -= 0.1, 0, 0);
-    //d->camera->setupCamera(d->window.window);
-    //GFXUtil::drawRect(d->window.mouseInput.x - 10, d->window.mouseInput.y - 10, 20, 20, 0);
-    // float a = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+void Render::update() {
 
-    //glTranslatef(d->window.mouseInput.x - (testTexture->width / 2), d->window.mouseInput.y - (testTexture->height / 2), 0);
+}
 
-    testTexture->bindTexture();
+void Render::draw() {
+    GFXUtil::drawRect(0, 0, game->window.width, game->window.height, {112, 192, 160});
 
-    posX = MathUtil::SmoothStep(posX, d->input.mouse.x - (testTexture->width / 2),  10 * deltaTime);
-    posY = MathUtil::SmoothStep(posY, d->input.mouse.y - (testTexture->height / 2), 10 * deltaTime);
+    for(int b = 0; b < 300; b++){
 
-    glm::vec ab = glm::vec3(1, 1, 1);
+        glPushMatrix();
 
-    //GFXUtil::drawRect(d->input.mouse.x - 10, d->input.mouse.y - 10, 20, 20, {255, 100, 255, 255});
+        glTranslatef((rand() % (int)(game->window.width / 9)) * 9, (rand() % (int)(game->window.width / 9)) * 9, 0);
 
-    GFXUtil::drawTexture(posX, posY, 0, 0, testTexture->width, testTexture->height, testTexture->width, testTexture->height);
+        std::vector<int> pn = makeRandomNoise();
+        std::vector<Color> color(2);
+        color[0] = {160, 208, 192};
+        color[1] = {64, 176, 128};
 
+        int r = rand() % 2;
+
+        for(int id = 0; id < pn.size(); id++){
+            if(pn[id] > 0){
+                int y = id / 3;
+                int x = id <= 3 ? id : id - (3 * y);
+
+                GFXUtil::drawRect(3 * x, 3 * y, 3, 3, color[r]);
+                //std::cout << "X: " << x << " Y: " << y << " VAL: " << pn[id] << std::endl;
+            }
+        }
+        glPopMatrix();
+    }
+
+}
+
+void Render::dispose() {
+    delete texture;
 }

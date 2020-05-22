@@ -5,7 +5,7 @@
 #include "nmouse.h"
 
 struct NWindow {
-    GLFWwindow * window;
+    GLFWwindow * glwindow;
     float width;
     float height;
     char* title;

@@ -9,7 +9,7 @@ class Camera {
         Camera(){}
         glm::vec3 pos = glm::vec3(0, 0,0);
         void setupCamera(GLFWwindow * d);
-        void updateCamera();
+        void bindCamera();
 };
 
 
