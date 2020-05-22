@@ -36,11 +36,13 @@ void Render::update() {
 void Render::draw() {
     GFXUtil::drawRect(0, 0, game->window.width, game->window.height, {112, 192, 160});
 
-    for(int b = 0; b < 300; b++){
+    glBegin(GL_QUADS);
+    GFXUtil::drawRect(0, 0, game->window.width, game->window.height, {112, 192, 160});
 
-        glPushMatrix();
+    for(int b = 0; b < 500; b++){
 
-        glTranslatef((rand() % (int)(game->window.width / 9)) * 9, (rand() % (int)(game->window.width / 9)) * 9, 0);
+        int pX = (rand() % (int)(game->window.width / 9)) * 9;
+        int pY = (rand() % (int)(game->window.width / 9)) * 9;
 
         std::vector<int> pn = makeRandomNoise();
         std::vector<Color> color(2);
@@ -53,14 +55,12 @@ void Render::draw() {
             if(pn[id] > 0){
                 int y = id / 3;
                 int x = id <= 3 ? id : id - (3 * y);
-
-                GFXUtil::drawRect(3 * x, 3 * y, 3, 3, color[r]);
+                GFXUtil::drawRect(pX + 3 * x, pY + 3 * y, 3, 3, color[r]);
                 //std::cout << "X: " << x << " Y: " << y << " VAL: " << pn[id] << std::endl;
             }
         }
-        glPopMatrix();
     }
-
+    glEnd();
 }
 
 void Render::dispose() {

@@ -68,13 +68,9 @@ void Display::createDisplay(int width, int height, char* title){
         glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        if(frameCounter >= 2){
-            glPushMatrix();
-            render->draw();
-            glPopMatrix();
-        }else{
-            frameCounter++;
-        }
+        glPushMatrix();
+        render->draw();
+        glPopMatrix();
 
         tmp->graphics.deltaTime = ( time - oldTime ) / 1000.0f;
         oldTime = time;
