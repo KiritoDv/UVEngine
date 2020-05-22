@@ -110,6 +110,9 @@
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/ninput.h">
 			<Option target="SpaceRPG"/>
 		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/nkeyboard.h">
+			<Option target="SpaceRPG"/>
+		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/nmouse.h">
 			<Option target="SpaceRPG"/>
 		</Unit>

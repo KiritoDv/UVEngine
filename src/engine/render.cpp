@@ -18,9 +18,9 @@ Texture * texture;
 std::vector<int> makeRandomNoise(){
     std::vector<int> pn(9);
 
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 9; i++){
         //std::cout << rand() % 9 << std::endl;
-        pn[rand() % 9] = 1;
+        pn[i] = 1;
     }
     return pn;
 }
@@ -39,7 +39,7 @@ void Render::draw() {
     glBegin(GL_QUADS);
     GFXUtil::drawRect(0, 0, game->window.width, game->window.height, {112, 192, 160});
 
-    for(int b = 0; b < 500; b++){
+    for(int b = 0; b < 700; b++){
 
         int pX = (rand() % (int)(game->window.width / 9)) * 9;
         int pY = (rand() % (int)(game->window.width / 9)) * 9;
