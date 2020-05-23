@@ -1,13 +1,11 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <GL/freeglut.h>
-#include "engine/camera.h"
 #include <data/nwindow.h>
 #include <data/ninput.h>
 #include <data/ngraphics.h>
+
+class Camera;
 
 class Display {
     private:

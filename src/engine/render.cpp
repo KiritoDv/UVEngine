@@ -2,65 +2,63 @@
 #include "engine/render.h"
 #include "util/umath.h"
 
-#include <vector>
-#include <iostream>
-#include <algorithm>
 #include "glm/glm.hpp"
 #include "util/GFXUtil.h"
-
-#include <stdlib.h>
-#include <time.h>
-
-#include "data/ncolor.h"
+#include "engine/display.h"
+#include "engine/camera.h"
 
 Texture * texture;
-
-std::vector<int> makeRandomNoise(){
-    std::vector<int> pn(9);
-
-    for(int i = 0; i < 9; i++){
-        //std::cout << rand() % 9 << std::endl;
-        pn[i] = 1;
-    }
-    return pn;
-}
 
 void Render::create() {
     texture = new Texture("F:\\Pics\\79372456_2508036846106949_7921174829296779264_n.png");
 }
 
-void Render::update() {
+float camSpeed = 1000;
 
+void Render::update() {
+    if(glfwGetKey(game->window.glwindow, GLFW_KEY_W) == GLFW_PRESS){
+        game->camera->pos += vec2(0, camSpeed * game->graphics.deltaTime);
+    }
+    if(glfwGetKey(game->window.glwindow, GLFW_KEY_S) == GLFW_PRESS){
+        game->camera->pos -= vec2(0, camSpeed * game->graphics.deltaTime);
+    }
+    if(glfwGetKey(game->window.glwindow, GLFW_KEY_A) == GLFW_PRESS){
+        game->camera->pos += vec2(camSpeed * game->graphics.deltaTime,0);
+    }
+    if(glfwGetKey(game->window.glwindow, GLFW_KEY_D) == GLFW_PRESS){
+        game->camera->pos -= vec2( camSpeed * game->graphics.deltaTime,0);
+    }
+
+    if(glfwGetKey(game->window.glwindow, GLFW_KEY_UP) == GLFW_PRESS){
+        game->camera->zoom += vec2(0, 1 * game->graphics.deltaTime);
+    }
+    if(glfwGetKey(game->window.glwindow, GLFW_KEY_DOWN) == GLFW_PRESS){
+        game->camera->zoom -= vec2(0, 1 * game->graphics.deltaTime);
+    }
+    if(glfwGetKey(game->window.glwindow, GLFW_KEY_LEFT) == GLFW_PRESS){
+        game->camera->zoom += vec2(1 * game->graphics.deltaTime, 0);
+    }
+    if(glfwGetKey(game->window.glwindow, GLFW_KEY_RIGHT) == GLFW_PRESS){
+        game->camera->zoom -= vec2(1 * game->graphics.deltaTime, 0);
+    }
+
+    if(glfwGetKey(game->window.glwindow, GLFW_KEY_KP_ADD) == GLFW_PRESS){
+        game->camera->rotation += 45 * game->graphics.deltaTime;
+    }
+    if(glfwGetKey(game->window.glwindow, GLFW_KEY_MINUS) == GLFW_PRESS){
+        game->camera->rotation -= 45 * game->graphics.deltaTime;
+    }
 }
 
 void Render::draw() {
-    GFXUtil::drawRect(0, 0, game->window.width, game->window.height, {112, 192, 160});
+    game->camera->zoom = vec2(2, 2);
+    game->camera->bindCamera();
 
+    texture->bindTexture();
     glBegin(GL_QUADS);
-    GFXUtil::drawRect(0, 0, game->window.width, game->window.height, {112, 192, 160});
-
-    for(int b = 0; b < 700; b++){
-
-        int pX = (rand() % (int)(game->window.width / 9)) * 9;
-        int pY = (rand() % (int)(game->window.width / 9)) * 9;
-
-        std::vector<int> pn = makeRandomNoise();
-        std::vector<Color> color(2);
-        color[0] = {160, 208, 192};
-        color[1] = {64, 176, 128};
-
-        int r = rand() % 2;
-
-        for(int id = 0; id < pn.size(); id++){
-            if(pn[id] > 0){
-                int y = id / 3;
-                int x = id <= 3 ? id : id - (3 * y);
-                GFXUtil::drawRect(pX + 3 * x, pY + 3 * y, 3, 3, color[r]);
-                //std::cout << "X: " << x << " Y: " << y << " VAL: " << pn[id] << std::endl;
-            }
-        }
-    }
+    GFXUtil::drawRect(game->camera->getWidth() / 2 - 32, game->camera->getHeight() / 2 - 32, 64, 64, {120, 180, 180});
     glEnd();
+    game->camera->unbindCamera();
 }
 
 void Render::dispose() {

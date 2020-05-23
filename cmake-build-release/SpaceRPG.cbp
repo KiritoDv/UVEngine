@@ -101,39 +101,6 @@
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/engine/util/GFXUtil.cpp">
 			<Option target="SpaceRPG"/>
 		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/ncolor.h">
-			<Option target="SpaceRPG"/>
-		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/ngraphics.h">
-			<Option target="SpaceRPG"/>
-		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/ninput.h">
-			<Option target="SpaceRPG"/>
-		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/nkeyboard.h">
-			<Option target="SpaceRPG"/>
-		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/nmouse.h">
-			<Option target="SpaceRPG"/>
-		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/nscroll.h">
-			<Option target="SpaceRPG"/>
-		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/data/nwindow.h">
-			<Option target="SpaceRPG"/>
-		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/engine/camera.h">
-			<Option target="SpaceRPG"/>
-		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/engine/texture/texture.h">
-			<Option target="SpaceRPG"/>
-		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/util/GFXUtil.h">
-			<Option target="SpaceRPG"/>
-		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/util/umath.h">
-			<Option target="SpaceRPG"/>
-		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/main.cpp">
 			<Option target="SpaceRPG"/>
 		</Unit>

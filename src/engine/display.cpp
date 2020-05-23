@@ -1,7 +1,10 @@
+#include "gl/glew.h"
+#include "GLFW/glfw3.h"
+#include "gl/freeglut.h"
 #include "engine/display.h"
 #include "engine/render.h"
+#include "engine/camera.h"
 #include <iostream>
-#include <thread>
 
 Display::Display(int width, int height, char *windowTitle) {
     window.width = width;
@@ -12,7 +15,7 @@ Display::Display(int width, int height, char *windowTitle) {
 void Display::createDisplay(int width, int height, char* title){
 
     auto tmp = new Display(width, height, title);
-    auto render = new Render();
+    auto render = new Render(tmp);
     tmp->camera = new Camera();
 
     if(!glfwInit()){
@@ -47,7 +50,6 @@ void Display::createDisplay(int width, int height, char* title){
     float oldTime = 0;
     int frameCounter = 0;
 
-    render->game = tmp;
     render->create();
 
     tmp->updateWindowSize(width, height);

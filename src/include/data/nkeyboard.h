@@ -6,7 +6,7 @@
 struct Keyboard {
 
     bool isKeyPressed(int key){
-        return glfwGetKeyScancode(key) == GLFW_PRESS;
+        return true;
     }
 
 };
