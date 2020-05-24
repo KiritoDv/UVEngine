@@ -2,7 +2,6 @@
 
 #include "engine/display.h"
 #include "engine/camera.h"
-#include <iostream>
 
 void Camera::setupCamera(GLFWwindow* win) {
     Display *display = static_cast<Display*>(glfwGetWindowUserPointer(win));
@@ -15,8 +14,8 @@ void Camera::setupCamera(GLFWwindow* win) {
 
 void Camera::bindCamera(){
     glPushMatrix();
-
     glTranslatef((engine->window.width / 2 + pos.x), (engine->window.height / 2 + pos.y), 0);
+    glTranslatef(-pos.x, -pos.y, 0);
     glScalef(zoom.x, zoom.y, 1);
     glRotatef(rotation, 0, 0, 1);
     glTranslatef(-(engine->window.width / 2 + pos.x), -(engine->window.height / 2 + pos.y), 0);

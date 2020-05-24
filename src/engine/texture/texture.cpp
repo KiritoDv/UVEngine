@@ -1,12 +1,10 @@
 #include "engine/texture/texture.h"
-#include "gl/glew.h"
-
 #ifndef STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
 #endif
 #include <stb_image.h>
-
 #include <iostream>
+#include "gl/glew.h";
 
 Texture::Texture(const char * path) {
     glGenTextures(1, &textureId);

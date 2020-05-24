@@ -5,7 +5,7 @@
 		<Option title="SpaceRPG"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="msvc8"/>
-		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\Lib-Utils\;CMake Files\..\Lib-Utils\vcpkg\;CMake Files\..\Lib-Utils\vcpkg\scripts\;CMake Files\..\Lib-Utils\vcpkg\scripts\buildsystems\;CMake Files\..\Lib-Utils\vcpkg\installed\;CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\;CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\;CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\glfw3\;CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\glew\;CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\glm\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\Lib-Utils\;CMake Files\..\Lib-Utils\vcpkg\;CMake Files\..\Lib-Utils\vcpkg\scripts\;CMake Files\..\Lib-Utils\vcpkg\scripts\buildsystems\;CMake Files\..\Lib-Utils\vcpkg\installed\;CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\;CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\;CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\glfw3\;CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\glew\;CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\glm\;CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\entt\;CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\nlohmann_json\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="E:/GDev/C++/IsoRPG-DO/cmake-build-debug"/>
@@ -104,6 +104,9 @@
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/main.cpp">
 			<Option target="SpaceRPG"/>
 		</Unit>
+		<Unit filename="E:/GDev/C++/Lib-Utils/vcpkg/installed/x86-windows/share/nlohmann_json/nlohmann_json.natvis">
+			<Option target="SpaceRPG"/>
+		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
@@ -145,6 +148,24 @@
 		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/../Lib-Utils/vcpkg/installed/x86-windows/share/glm/glm-config.cmake">
 			<Option virtualFolder="CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\glm\"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/../Lib-Utils/vcpkg/installed/x86-windows/share/entt/EnTTConfig.cmake">
+			<Option virtualFolder="CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\entt\"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/../Lib-Utils/vcpkg/installed/x86-windows/share/entt/EnTTConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\entt\"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/../Lib-Utils/vcpkg/installed/x86-windows/share/entt/EnTTTargets.cmake">
+			<Option virtualFolder="CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\entt\"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/../Lib-Utils/vcpkg/installed/x86-windows/share/nlohmann_json/nlohmann_jsonConfig.cmake">
+			<Option virtualFolder="CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\nlohmann_json\"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/../Lib-Utils/vcpkg/installed/x86-windows/share/nlohmann_json/nlohmann_jsonConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\nlohmann_json\"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/../Lib-Utils/vcpkg/installed/x86-windows/share/nlohmann_json/nlohmann_jsonTargets.cmake">
+			<Option virtualFolder="CMake Files\..\Lib-Utils\vcpkg\installed\x86-windows\share\nlohmann_json\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

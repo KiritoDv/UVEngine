@@ -1,6 +1,6 @@
 #include "gl/glew.h"
+
 #include "GLFW/glfw3.h"
-#include "gl/freeglut.h"
 #include "engine/display.h"
 #include "engine/render.h"
 #include "engine/camera.h"
@@ -48,7 +48,6 @@ void Display::createDisplay(int width, int height, char* title){
 
     float time = 0;
     float oldTime = 0;
-    int frameCounter = 0;
 
     render->create();
 
@@ -65,7 +64,9 @@ void Display::createDisplay(int width, int height, char* title){
         double xMPos, yMPos;
         glfwGetCursorPos(tmp->window.glwindow, &xMPos, &yMPos);
 
-        time = glutGet(GLUT_ELAPSED_TIME);
+        time = glfwGetTime();
+        tmp->graphics.deltaTime = ( time - oldTime );
+        oldTime = time;
 
         glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -73,9 +74,6 @@ void Display::createDisplay(int width, int height, char* title){
         glPushMatrix();
         render->draw();
         glPopMatrix();
-
-        tmp->graphics.deltaTime = ( time - oldTime ) / 1000.0f;
-        oldTime = time;
 
         glfwSwapBuffers(tmp->window.glwindow);
         glfwPollEvents();
