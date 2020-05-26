@@ -67,7 +67,7 @@
     "properties": {
         "size": {
             "tile": [16, 16],
-            "map": [64, 64]
+            "map": [50, 50]
         },
         "defaultTile": {
             "id": "grass",

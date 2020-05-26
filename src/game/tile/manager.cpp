@@ -63,9 +63,23 @@ void TileManager::loadMap(string path) {
     for(auto &tile : map["tiles"]){
         if(_tilePool.find(tile["id"]) != _tilePool.end()){
             Tile * tmp = _tilePool[tile["id"]]->clone();
-            tmp->position = {tile["pos"][0], tile["pos"][1]};
-            tmp->position.layer = tile["pos"][2];
-            _tileMap->_pool.push_back(tmp);
+
+            if(tmp->data.size.width >= _tileMap->_tileSize.width || tmp->data.size.height >= _tileMap->_tileSize.height){
+                for(int x = 0; x < (tmp->data.size.width / _tileMap->_tileSize.width); x++){
+                    for(int y = 0; y < (tmp->data.size.height / _tileMap->_tileSize.height); y++){
+                        Tile * tmpW = tmp->clone();
+                        tmpW->position = {(int)tile["pos"][0] + x, (int)tile["pos"][1] + y};
+                        tmpW->data.uv = {tmp->data.uv.x + ((int)_tileMap->_tileSize.width * x), tmp->data.uv.y + ((int)_tileMap->_tileSize.height * y)};
+                        tmpW->position.layer = tile["pos"][2];
+                        _tileMap->_pool.push_back(tmpW);
+                    }
+                }
+            }else{
+                tmp->position = {tile["pos"][0], tile["pos"][1]};
+                tmp->position.layer = tile["pos"][2];
+                _tileMap->_pool.push_back(tmp);
+            }
+
         }
     }
 
@@ -90,6 +104,9 @@ void TileManager::loadMap(string path) {
     sort(_tileMap->_pool.begin(), _tileMap->_pool.end(), [this](Tile * a, Tile * b){
         return a->position.layer < b->position.layer;
     });
+
+
+
 }
 
 void TileManager::updateMap() {
@@ -97,6 +114,9 @@ void TileManager::updateMap() {
 }
 
 void TileManager::renderMap() {
+
+    //glTranslatef(engine->game->camera->getWidth() / 2 - (_tileMap->_mapSize.width * _tileMap->_tileSize.width) / 2, engine->game->camera->getHeight() / 2 - (_tileMap->_mapSize.height * _tileMap->_tileSize.height) / 2, 0);
+
     for(auto &tile : _tileMap->_pool){
         int tX = tile->position.x * _tileMap->_tileSize.width;
         int tY = tile->position.y * _tileMap->_tileSize.height;
@@ -122,6 +142,6 @@ void TileManager::renderMap() {
             tile->data.uv.y = currentFrame.frame.y;
         }
         _texturePool[tile->data.textures[0]]->bindTexture();
-        GFXUtil::drawTexture(tX, tY, tile->data.uv.x, tile->data.uv.y, tile->data.size.width, tile->data.size.height, _texturePool[tile->data.textures[0]]->width, _texturePool[tile->data.textures[0]]->height);
+        GFXUtil::drawTexture(tX, tY, tile->data.uv.x, tile->data.uv.y, _tileMap->_tileSize.width, _tileMap->_tileSize.height, _texturePool[tile->data.textures[0]]->width, _texturePool[tile->data.textures[0]]->height);
     }
 }

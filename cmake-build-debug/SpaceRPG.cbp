@@ -110,9 +110,6 @@
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/game/tile/map.cpp">
 			<Option target="SpaceRPG"/>
 		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/engine/util/EngineUtil.h">
-			<Option target="SpaceRPG"/>
-		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/main.cpp">
 			<Option target="SpaceRPG"/>
 		</Unit>

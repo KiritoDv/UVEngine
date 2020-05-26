@@ -32,10 +32,10 @@ void GameEngine::update() {
     int mapSizeX = tileManager->_tileMap->_mapSize.width * tileManager->_tileMap->_tileSize.width;
     int mapSizeY = tileManager->_tileMap->_mapSize.height * tileManager->_tileMap->_tileSize.height;
 
-    if(game->camera->pos.x < 0)
-        game->camera->pos = {0, game->camera->pos.y};
-    if(game->camera->pos.y < 0)
-        game->camera->pos = {game->camera->pos.x, 0};
+    //if(game->camera->pos.x < 0)
+        //game->camera->pos = {0, game->camera->pos.y};
+    //if(game->camera->pos.y < 0)
+        //game->camera->pos = {game->camera->pos.x, 0};
 
 }
 

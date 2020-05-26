@@ -7,7 +7,7 @@ file(COPY src/assets DESTINATION ${CMAKE_BINARY_DIR})
 
 file(GLOB_RECURSE SOURCES src/*.cpp)
 
-add_executable(SpaceRPG ${SOURCES} src/include/engine/util/EngineUtil.h)
+add_executable(SpaceRPG ${SOURCES})
 
 find_package(glfw3 CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
