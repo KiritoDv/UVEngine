@@ -14,11 +14,11 @@ void Camera::setupCamera(GLFWwindow* win) {
 
 void Camera::bindCamera(){
     glPushMatrix();
-    glTranslatef((engine->window.width / 2 + pos.x), (engine->window.height / 2 + pos.y), 0);
-    glTranslatef(-pos.x, -pos.y, 0);
+    glTranslatef((engine->window.width / 2) * zoom.x, (engine->window.height / 2) * zoom.y, 0);
+    glTranslatef(-pos.x * zoom.x, -pos.y * zoom.y, 0);
     glScalef(zoom.x, zoom.y, 1);
     glRotatef(rotation, 0, 0, 1);
-    glTranslatef(-(engine->window.width / 2 + pos.x), -(engine->window.height / 2 + pos.y), 0);
+    glTranslatef(-(engine->window.width / 2), -(engine->window.height / 2) , 0);
 }
 
 void Camera::unbindCamera(){

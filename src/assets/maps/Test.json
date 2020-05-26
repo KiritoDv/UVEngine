@@ -1,0 +1,77 @@
+{
+    "textures": [
+        {
+            "id": "grass",
+            "path": "assets/tiles/Overworld.png",
+            "properties": {
+                "size": [16, 16],
+                "uv": [0, 0]
+            }
+        },
+        {
+            "id": "hole",
+            "path": "assets/tiles/Overworld.png",
+            "properties": {
+                "size": [48, 48],
+                "uv": [352, 144],
+                "animation": {
+                    "current": "idle",
+                    "list": [
+                        {
+                            "id": "idle",
+                            "pingPong": false,
+                            "frames": [
+                                {"delay": 100, "frame": [352, 144]},
+                                {"delay": 100, "frame": [400, 144]},
+                                {"delay": 100, "frame": [448, 144]}
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": "house",
+            "path": "assets/tiles/Overworld.png",
+            "properties": {
+                "size": [80, 80],
+                "uv": [96, 0]
+            }
+        },
+        {
+            "id": "tree",
+            "path": "assets/tiles/Overworld.png",
+            "properties": {
+                "size": [48, 16],
+                "uv": [48, 80]
+            }
+        }
+    ],
+    "tiles": [
+        {
+            "pos": [1, 8, 1],
+            "id": "hole",
+            "behaviour": "tbd"
+        },
+        {
+            "pos": [4, 8, 1],
+            "id": "hole",
+            "behaviour": "tbd"
+        },
+        {
+            "pos": [0, 0, 1],
+            "id": "house",
+            "behaviour": "tbd"
+        }
+    ],
+    "properties": {
+        "size": {
+            "tile": [16, 16],
+            "map": [64, 64]
+        },
+        "defaultTile": {
+            "id": "grass",
+            "behaviour": "tbd"
+        }
+    }
+}

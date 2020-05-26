@@ -1,10 +1,12 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
+#include <string>;
+
 class Texture {
     public:
         Texture(){}
-        Texture(const char* path);
+        Texture(std::string path);
         void bindTexture();
         int width;
         int height;

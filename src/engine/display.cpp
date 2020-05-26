@@ -12,10 +12,10 @@ Display::Display(int width, int height, char *windowTitle) {
     window.title = windowTitle;
 }
 
-void Display::createDisplay(int width, int height, char* title){
+void Display::createDisplay(int width, int height, char* title, Render* render){
 
     auto tmp = new Display(width, height, title);
-    auto render = new Render(tmp);
+    render->game = tmp;
     tmp->camera = new Camera();
 
     if(!glfwInit()){

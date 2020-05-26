@@ -6,11 +6,11 @@
 #include <iostream>
 #include "gl/glew.h";
 
-Texture::Texture(const char * path) {
+Texture::Texture(std::string path) {
     glGenTextures(1, &textureId);
 
     int nrChannels;
-    unsigned char* data = stbi_load(path, &width, &height, &nrChannels, STBI_rgb_alpha);
+    unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrChannels, STBI_rgb_alpha);
 
     if (data) {
         glBindTexture(GL_TEXTURE_2D, reinterpret_cast<GLuint>(&textureId));
