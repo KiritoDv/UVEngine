@@ -1,10 +1,8 @@
-#include "gl/glew.h"
-
-#include "GLFW/glfw3.h"
-#include "engine/display.h"
+#include"engine/display.h"
 #include "engine/render.h"
 #include "engine/camera.h"
 #include <iostream>
+#include "SDL2/SDL_image.h"
 
 Display::Display(int width, int height, char *windowTitle) {
     window.width = width;
@@ -18,69 +16,67 @@ void Display::createDisplay(int width, int height, char* title, Render* render){
     render->game = tmp;
     tmp->camera = new Camera();
 
-    if(!glfwInit()){
-        std::cout << "Failed to start GLFW" << std::endl;
-        return;
+    if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+        IMG_Init(IMG_INIT_PNG);
+        std::cout << "Failed to init SDL" << std::endl;
+        SDL_DestroyWindow(tmp->window.sdlwindow);
     }
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    tmp->window.sdlwindow = SDL_CreateWindow(tmp->window.title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_RESIZABLE);
 
-    tmp->window.glwindow = glfwCreateWindow(width, height, title, NULL, NULL);
-    glfwSetWindowTitle(tmp->window.glwindow, tmp->window.title);
-
-    if(!tmp->window.glwindow){
+    if(!tmp->window.sdlwindow){
         std::cout << "Failed to create window" << std::endl;
-        glfwDestroyWindow(tmp->window.glwindow);
+        SDL_DestroyWindow(tmp->window.sdlwindow);
+        SDL_Quit();
         return;
     }
 
-    glfwSetWindowUserPointer(tmp->window.glwindow, tmp);
-    glfwMakeContextCurrent(tmp->window.glwindow);
-
-    if (glewInit()){
-        std::cout << "Failed to start GLEW" << std::endl;
-        glfwDestroyWindow(tmp->window.glwindow);
-        return;
-    }
-
-    glfwSwapInterval(0);
+    render->sdlRenderer = SDL_CreateRenderer(tmp->window.sdlwindow, -1, SDL_RENDERER_ACCELERATED);
 
     float time = 0;
     float oldTime = 0;
 
     render->create();
 
-    tmp->updateWindowSize(width, height);
-    glfwSetFramebufferSizeCallback(tmp->window.glwindow, WindowResizeCallback);
-    glfwSetCursorEnterCallback(tmp->window.glwindow, MouseEnterCallback);
-    glfwSetScrollCallback(tmp->window.glwindow, ScrollCallback);
-    tmp->camera->setupCamera(tmp->window.glwindow);
+    //tmp->updateWindowSize(width, height);
 
-    while(!glfwWindowShouldClose(tmp->window.glwindow)){
+    //tmp->camera->setupCamera(tmp->window.sdlwindow);
+    SDL_Event e;
+    while(tmp->window.keepOpen){
 
-        render->update();
+        while(SDL_PollEvent(&e) != 0){
+            switch (e.type) {
+                case SDL_QUIT: {
+                    tmp->window.keepOpen = false;
+                    break;
+                }
+                case SDL_WINDOWEVENT_SIZE_CHANGED: {
+                    tmp->updateWindowSize(e.window.data1, e.window.data2);
+                    break;
+                }
+                case SDL_MOUSEWHEEL_NORMAL: {
+                    tmp->input.scroll.x = e.window.data1;
+                    break;
+                }
+            }
+        }
+
+        SDL_SetRenderDrawColor(render->sdlRenderer, 0, 0, 0, 1);
+        SDL_RenderClear(render->sdlRenderer);
 
         double xMPos, yMPos;
-        glfwGetCursorPos(tmp->window.glwindow, &xMPos, &yMPos);
 
-        time = glfwGetTime();
         tmp->graphics.deltaTime = ( time - oldTime );
         oldTime = time;
 
-        glClearColor(0, 0, 0, 1);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        glPushMatrix();
         render->draw();
-        glPopMatrix();
-
-        glfwSwapBuffers(tmp->window.glwindow);
-        glfwPollEvents();
+        SDL_RenderPresent(render->sdlRenderer);
+        SDL_Delay(0);
     }
 
     render->dispose();
-    glfwDestroyWindow(tmp->window.glwindow);
+    SDL_DestroyWindow(tmp->window.sdlwindow);
+    SDL_Quit();
     delete tmp->camera;
     delete tmp;
 }
@@ -88,5 +84,5 @@ void Display::createDisplay(int width, int height, char* title, Render* render){
 void Display::updateWindowSize(int w, int h){
     window.width = w;
     window.height = h;
-    camera->setupCamera(window.glwindow);
+    // camera->setupCamera(window.glwindow);
 }

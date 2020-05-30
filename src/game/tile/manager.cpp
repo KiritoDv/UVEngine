@@ -14,7 +14,7 @@ using namespace nlohmann;
 void TileManager::registerTile(string key, Tile *tile) {
     for(auto &tex : tile->data.textures){
         if(_texturePool.find(tex) == _texturePool.end()) {
-            _texturePool[tex] = new Texture(tex);
+            _texturePool[tex] = new Texture(engine->sdlRenderer, tex);
         }
     }
     _tilePool[key] = tile;
@@ -44,6 +44,7 @@ void TileManager::loadMap(string path) {
         tmp->data.size = {tex["properties"]["size"][0], tex["properties"]["size"][1]};
         tmp->data.uv = {tex["properties"]["uv"][0], tex["properties"]["uv"][1]};
         tmp->data.textures = {tex["path"]};
+
         if(tex["properties"].find("animation") != tex["properties"].end() && !tex["properties"]["animation"].is_null()){
             tmp->data.animation.currentAnimation = tex["properties"]["animation"]["current"];
 
@@ -90,6 +91,26 @@ void TileManager::loadMap(string path) {
     sort(_tileMap->_pool.begin(), _tileMap->_pool.end(), [this](Tile * a, Tile * b){
         return a->position.layer < b->position.layer;
     });
+
+    this->bakeTextures();
+}
+
+void TileManager::bakeTextures(){
+    SDL_Texture *bakedTexture = SDL_CreateTexture(engine->sdlRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, engine->game->window.width, engine->game->window.height);
+    SDL_SetRenderTarget(engine->sdlRenderer, bakedTexture);
+    SDL_RenderClear(engine->sdlRenderer);
+
+    for(auto &tile : _tileMap->_pool){
+        int tX = tile->position.x * _tileMap->_tileSize.width;
+        int tY = tile->position.y * _tileMap->_tileSize.height;
+
+        if(!(tile->data.animation.animations.size() > 0 && !tile->data.animation.currentAnimation.empty())){
+            engine->gfx->drawUVTexture(_texturePool[tile->data.textures[0]], tX, tY, tile->data.uv.x, tile->data.uv.y, tile->data.size.width, tile->data.size.height, _texturePool[tile->data.textures[0]]->width, _texturePool[tile->data.textures[0]]->height);
+        }
+    }
+    SDL_SetRenderTarget(engine->sdlRenderer, NULL);
+
+    this->bakedMap = new Texture(engine->sdlRenderer, bakedTexture);
 }
 
 void TileManager::updateMap() {
@@ -97,12 +118,11 @@ void TileManager::updateMap() {
 }
 
 void TileManager::renderMap() {
+    engine->gfx->drawTexture(this->bakedMap, 0, 0, engine->game->window.width, engine->game->window.height);
+
     for(auto &tile : _tileMap->_pool){
         int tX = tile->position.x * _tileMap->_tileSize.width;
         int tY = tile->position.y * _tileMap->_tileSize.height;
-
-        if(!(tile->position.x <= _tileMap->_mapSize.width && tile->position.y <= _tileMap->_mapSize.height && tX >= engine->game->camera->pos.x - tile->data.size.width && tX <= engine->game->camera->pos.x + engine->game->camera->getWidth() && tY >= engine->game->camera->pos.y - tile->data.size.height && tY <= engine->game->camera->pos.y + engine->game->camera->getHeight()))
-            continue;
 
         if(tile->data.animation.animations.size() > 0 && !tile->data.animation.currentAnimation.empty()){
             TileAnimationData tmpData = tile->data.animation.animations[tile->data.animation.currentAnimation];
@@ -120,8 +140,8 @@ void TileManager::renderMap() {
 
             tile->data.uv.x = currentFrame.frame.x;
             tile->data.uv.y = currentFrame.frame.y;
+            engine->gfx->drawUVTexture(_texturePool[tile->data.textures[0]], tX, tY, tile->data.uv.x, tile->data.uv.y, tile->data.size.width, tile->data.size.height, _texturePool[tile->data.textures[0]]->width, _texturePool[tile->data.textures[0]]->height);
         }
-        _texturePool[tile->data.textures[0]]->bindTexture();
-        GFXUtil::drawTexture(tX, tY, tile->data.uv.x, tile->data.uv.y, tile->data.size.width, tile->data.size.height, _texturePool[tile->data.textures[0]]->width, _texturePool[tile->data.textures[0]]->height);
+        // ->bindTexture();
     }
 }

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/IsoRPG-DO.iml" filepath="$PROJECT_DIR$/.idea/IsoRPG-DO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/SpaceRPG.iml" filepath="$PROJECT_DIR$/.idea/SpaceRPG.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/UVEngine_SDL.iml" filepath="$PROJECT_DIR$/.idea/UVEngine_SDL.iml" />
     </modules>
   </component>
 </project>

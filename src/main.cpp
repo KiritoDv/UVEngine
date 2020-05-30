@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int main() {
+int main(int argv, char** args) {
     Display::createDisplay(800, 600, "SpaceRPG", new GameEngine());
     return 0;
 }

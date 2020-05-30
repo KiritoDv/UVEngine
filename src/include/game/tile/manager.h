@@ -9,20 +9,26 @@
 using namespace std;
 class Texture;
 class Render;
+class SDL_Texture;
+
+struct BakedTexture {
+    Tile * tile;
+    SDL_Texture * bake;
+};
 
 class TileManager {
     private:
-        map<string, Texture *> _texturePool;
+        map<string, Texture * > _texturePool;
         map<string, Tile * > _tilePool;
+        Texture * bakedMap;
         void registerTile(string key, Tile* tile);
     public:
-        int skipXTiles = 0;
-        int skipYTiles = 0;
         Map * _tileMap;
-        TileManager(){}
+        TileManager() = default;
         void loadMap(string path);
         void updateMap();
         void renderMap();
+        void bakeTextures();
         inline void disposeMap(){
             _tileMap->_pool.clear();
             _texturePool.clear();

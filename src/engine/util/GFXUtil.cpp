@@ -1,36 +1,52 @@
-#include <engine/data/ncolor.h>
+#include "engine/data/ncolor.h"
+#include "SDL2/SDL.h"
 #include "engine/util/GFXUtil.h"
-#include "gl/glew.h";
+#include "engine/render.h"
+#include "engine/texture/texture.h"
 
 void GFXUtil::drawRect(float x, float y, float w, float h, Color c) {
-    glBegin(GL_QUADS);
-        glColor4d(c.red / 255.0f, c.green / 255.0f, c.blue / 255.0f, c.alpha / 255.0f);
-        glVertex2f(x, y);
-        glVertex2f(x + w, y);
-        glVertex2f(x + w, y + h);
-        glVertex2f(x, y + h);
-    glEnd();
+    SDL_Rect rect;
+    rect.x = x;
+    rect.y = y;
+    rect.w = w;
+    rect.h = h;
+    SDL_SetRenderDrawColor(renderer->sdlRenderer, c.red, c.green, c.blue, c.alpha);
+    SDL_RenderFillRect(renderer->sdlRenderer, &rect);
 }
 
 
+void GFXUtil::drawTexture(Texture * texture, int x, int y, int width, int height) {
+    GFXUtil::drawSDLTexture(texture->texture, x, y, width, height);
+}
 
-void GFXUtil::drawTexture(int x, int y, float u, float v, int width, int height, float textureWidth, float textureHeight) {
+void GFXUtil::drawUVTexture(Texture * texture, int x, int y, float u, float v, int width, int height, float textureWidth, float textureHeight) {
+    GFXUtil::drawSDLUVTexture(texture->texture, x, y, u, v, width, height, textureWidth, textureHeight);
+}
 
-    float f = 1.0 / textureWidth;
-    float f1 = 1.0 / textureHeight;
+void GFXUtil::drawSDLTexture(SDL_Texture * texture, int x, int y, int width, int height) {
 
-    glEnable(GL_TEXTURE_2D);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glBegin(GL_QUADS);
-        glTexCoord2f(u * f, (v + (float)height) * f1);
-        glVertex2f(x, y + height);
-        glTexCoord2f((u + (float)width) * f, (v + (float)height) * f1);
-        glVertex2f(x + width, y + height);
-        glTexCoord2f((u + (float)width) * f, v * f1);
-        glVertex2f(x + width, y);
-        glTexCoord2f(u * f, v * f1);
-        glVertex2f(x, y);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
-    glEnable(GL_BLEND);
+    SDL_Rect rect;
+    rect.x = x;
+    rect.y = y;
+    rect.w = width;
+    rect.h = height;
+
+    SDL_RenderCopy(renderer->sdlRenderer, texture, nullptr, &rect);
+}
+
+void GFXUtil::drawSDLUVTexture(SDL_Texture * texture, int x, int y, float u, float v, int width, int height, float textureWidth, float textureHeight) {
+
+    SDL_Rect rect;
+    rect.x = x;
+    rect.y = y;
+    rect.w = width;
+    rect.h = height;
+
+    SDL_Rect uv;
+    uv.x = u;
+    uv.y = v;
+    uv.w = width;
+    uv.h = height;
+
+    SDL_RenderCopy(renderer->sdlRenderer, texture, &uv, &rect);
 }

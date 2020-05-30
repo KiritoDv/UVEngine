@@ -11,19 +11,6 @@ class Render;
 class Display {
     private:
         Display(int width, int height, char* windowTitle);
-        inline static auto WindowResizeCallback(GLFWwindow *win, int w, int h) -> void {
-            Display *display = static_cast<Display*>(glfwGetWindowUserPointer(win));
-            display->updateWindowSize(w, h);
-        }
-        inline static auto MouseEnterCallback(GLFWwindow * win, int entered) -> void {
-            Display *display = static_cast<Display*>(glfwGetWindowUserPointer(win));
-            display->input.mouse.inWindow = (entered != 0);
-        }
-        inline static auto ScrollCallback(GLFWwindow* win, double xScroll, double yScroll) -> void {
-            Display *display = static_cast<Display*>(glfwGetWindowUserPointer(win));
-            display->input.scroll.x = xScroll;
-            display->input.scroll.y = yScroll;
-        }
     public:
         Camera * camera;
         NWindow window;

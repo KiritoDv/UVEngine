@@ -1,17 +1,21 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include <string>;
+#include <string>
+
+class SDL_Texture;
+class SDL_Renderer;
 
 class Texture {
     public:
         Texture(){}
-        Texture(std::string path);
-        void bindTexture();
+        Texture(SDL_Renderer * renderer, std::string path);
+        Texture(SDL_Renderer * renderer, SDL_Texture * texture);
+        Texture(SDL_Renderer * renderer);
+        ~Texture();
         int width;
         int height;
-    private:
-        unsigned int textureId;
+        SDL_Texture * texture;
 };
 
 
