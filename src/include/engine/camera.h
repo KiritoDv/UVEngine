@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "glm/vec3.hpp";
+#include "glm/vec3.hpp"
 #include "glm/gtc/quaternion.hpp"
 
 using namespace glm;

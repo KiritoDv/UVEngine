@@ -95,6 +95,15 @@
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/engine/render.cpp">
 			<Option target="SpaceRPG"/>
 		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/engine/renderer/BaseRenderer.cpp">
+			<Option target="SpaceRPG"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/engine/renderer/utils/IndexBuffer.cpp">
+			<Option target="SpaceRPG"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/engine/renderer/utils/VertexBuffer.cpp">
+			<Option target="SpaceRPG"/>
+		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/engine/texture/texture.cpp">
 			<Option target="SpaceRPG"/>
 		</Unit>
@@ -104,13 +113,25 @@
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/game/hook/GameEngine.cpp">
 			<Option target="SpaceRPG"/>
 		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/game/player/Player.cpp">
+			<Option target="SpaceRPG"/>
+		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/game/tile/manager.cpp">
 			<Option target="SpaceRPG"/>
 		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/game/tile/map.cpp">
 			<Option target="SpaceRPG"/>
 		</Unit>
-		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/engine/util/EngineUtil.h">
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/engine/renderer/BaseRenderer.h">
+			<Option target="SpaceRPG"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/engine/renderer/utils/VertexBuffer.h">
+			<Option target="SpaceRPG"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/game/animation/animation.h">
+			<Option target="SpaceRPG"/>
+		</Unit>
+		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/include/game/data/pos.h">
 			<Option target="SpaceRPG"/>
 		</Unit>
 		<Unit filename="E:/GDev/C++/IsoRPG-DO/src/main.cpp">

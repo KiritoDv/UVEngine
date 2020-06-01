@@ -1,12 +1,10 @@
 #include "game/tile/manager.h"
 #include <engine/texture/texture.h>
-#include "engine/util/GFXUtil.h"
 #include <fstream>
 #include <iostream>
 #include "game/hook/GameEngine.h"
 #include "engine/display.h"
 #include "engine/camera.h"
-#include "engine/util/umath.h"
 #include <future>
 
 using namespace nlohmann;
@@ -48,10 +46,10 @@ void TileManager::loadMap(string path) {
             tmp->data.animation.currentAnimation = tex["properties"]["animation"]["current"];
 
             for(auto &animation : tex["properties"]["animation"]["list"]){
-                vector<TileAnimationFrame> tmpList;
+                vector<AnimationFrame> tmpList;
 
                 for(auto &frame : animation["frames"]){
-                    tmpList.push_back({frame["delay"],{frame["frame"][0], frame["frame"][1]}});
+                    tmpList.push_back({frame["delay"], {frame["frame"][0], frame["frame"][1]}});
                 }
 
                 tmp->data.animation.animations[animation["id"]] = {tmpList, animation["pingPong"]};
@@ -64,7 +62,7 @@ void TileManager::loadMap(string path) {
         if(_tilePool.find(tile["id"]) != _tilePool.end()){
             Tile * tmp = _tilePool[tile["id"]]->clone();
             tmp->position = {tile["pos"][0], tile["pos"][1]};
-            tmp->position.layer = tile["pos"][2];
+            tmp->position.z = tile["pos"][2];
             _tileMap->_pool.push_back(tmp);
         }
     }
@@ -75,7 +73,7 @@ void TileManager::loadMap(string path) {
             for(int y = 0; y < _tileMap->_mapSize.height; y++){
 
                 auto it = find_if(_tileMap->_pool.begin(), _tileMap->_pool.end(), [x, y, this](Tile * a){
-                    return a->position.x == x && a->position.y == y && a->position.layer == 0;
+                    return a->position.x == x && a->position.y == y && a->position.z == 0;
                 });
 
                 if(it == _tileMap->_pool.end()){
@@ -88,7 +86,7 @@ void TileManager::loadMap(string path) {
     }
 
     sort(_tileMap->_pool.begin(), _tileMap->_pool.end(), [this](Tile * a, Tile * b){
-        return a->position.layer < b->position.layer;
+        return a->position.z < b->position.z;
     });
 }
 
@@ -104,24 +102,9 @@ void TileManager::renderMap() {
         if(!(tile->position.x <= _tileMap->_mapSize.width && tile->position.y <= _tileMap->_mapSize.height && tX >= engine->game->camera->pos.x - tile->data.size.width && tX <= engine->game->camera->pos.x + engine->game->camera->getWidth() && tY >= engine->game->camera->pos.y - tile->data.size.height && tY <= engine->game->camera->pos.y + engine->game->camera->getHeight()))
             continue;
 
-        if(tile->data.animation.animations.size() > 0 && !tile->data.animation.currentAnimation.empty()){
-            TileAnimationData tmpData = tile->data.animation.animations[tile->data.animation.currentAnimation];
-
-            TileAnimationFrame currentFrame = tmpData.frames[tile->data.animation.animationIndex];
-
-            if((tile->data.animation.initTime + currentFrame.delay) - EngineUtil::getTime() <= 0){
-                if(tmpData.pingPong){
-                    tile->data.animation.animationIndex = MathUtil::PingPong(tile->data.animation.getTime() * currentFrame.delay, tmpData.frames.size() - 1);
-                }else{
-                    tile->data.animation.animationIndex = (tile->data.animation.animationIndex < tmpData.frames.size() - 1 ? tile->data.animation.animationIndex + 1 : 0);
-                }
-                tile->data.animation.initTime = EngineUtil::getTime();
-            }
-
-            tile->data.uv.x = currentFrame.frame.x;
-            tile->data.uv.y = currentFrame.frame.y;
-        }
+        tile->data.uv = tile->data.animation.tickTexture(tile->data.uv);
         _texturePool[tile->data.textures[0]]->bindTexture();
-        GFXUtil::drawTexture(tX, tY, tile->data.uv.x, tile->data.uv.y, tile->data.size.width, tile->data.size.height, _texturePool[tile->data.textures[0]]->width, _texturePool[tile->data.textures[0]]->height);
+
+        //GFXUtil::drawTexture(tX, tY, tile->data.uv.x, tile->data.uv.y, tile->data.size.width, tile->data.size.height, _texturePool[tile->data.textures[0]]->width, _texturePool[tile->data.textures[0]]->height);
     }
 }

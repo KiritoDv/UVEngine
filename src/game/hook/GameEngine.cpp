@@ -16,26 +16,6 @@ void GameEngine::create() {
 float camSpeed = 350;
 
 void GameEngine::update() {
-    if(glfwGetKey(game->window.glwindow, GLFW_KEY_W) == GLFW_PRESS){
-        game->camera->pos -= vec2(0, camSpeed * game->graphics.deltaTime);
-    }
-    if(glfwGetKey(game->window.glwindow, GLFW_KEY_S) == GLFW_PRESS){
-        game->camera->pos += vec2(0, camSpeed * game->graphics.deltaTime);
-    }
-    if(glfwGetKey(game->window.glwindow, GLFW_KEY_A) == GLFW_PRESS){
-        game->camera->pos -= vec2(camSpeed * game->graphics.deltaTime,0);
-    }
-    if(glfwGetKey(game->window.glwindow, GLFW_KEY_D) == GLFW_PRESS){
-        game->camera->pos += vec2( camSpeed * game->graphics.deltaTime,0);
-    }
-
-    int mapSizeX = tileManager->_tileMap->_mapSize.width * tileManager->_tileMap->_tileSize.width;
-    int mapSizeY = tileManager->_tileMap->_mapSize.height * tileManager->_tileMap->_tileSize.height;
-
-    if(game->camera->pos.x < 0)
-        game->camera->pos = {0, game->camera->pos.y};
-    if(game->camera->pos.y < 0)
-        game->camera->pos = {game->camera->pos.x, 0};
 
 }
 

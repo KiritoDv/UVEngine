@@ -4,10 +4,9 @@ project(SpaceRPG)
 set(CMAKE_CXX_STANDARD 20)
 include_directories("src/include")
 file(COPY src/assets DESTINATION ${CMAKE_BINARY_DIR})
-
 file(GLOB_RECURSE SOURCES src/*.cpp)
 
-add_executable(SpaceRPG ${SOURCES} src/include/engine/util/EngineUtil.h)
+add_executable(SpaceRPG ${SOURCES} src/include/game/animation/animation.h src/include/game/data/pos.h src/engine/renderer/BaseRenderer.cpp src/include/engine/renderer/BaseRenderer.h src/engine/renderer/utils/VertexBuffer.cpp src/include/engine/renderer/utils/VertexBuffer.h)
 
 find_package(glfw3 CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
